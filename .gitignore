@@ -1,0 +1,23 @@
+# Secrets and local environment
+.env
+.env.*
+*.key
+*.pem
+
+# Editor and agent-local configuration
+.codex/
+.cursor/
+.cursorrules
+.gemini/
+.vscode/
+.idea/
+
+# Operating-system and temporary files
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*~
+
+# Local preview artifacts
+output/

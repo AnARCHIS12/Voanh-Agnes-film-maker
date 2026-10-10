@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">CINÉ-GENESIS</title>
+  <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe1a1"/><stop offset="1" stop-color="#efbd63"/></linearGradient></defs>
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="#111319" stroke="url(#gold)" stroke-width="4"/>
+  <path d="M35 38h58M35 64h58M35 90h58" fill="none" stroke="#f5f0e7" stroke-width="8" stroke-linecap="round"/>
+  <path d="M29 25v78M99 25v78" fill="none" stroke="#efbd63" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="29" cy="25" r="4" fill="#7ec8e3"/><circle cx="99" cy="103" r="4" fill="#7ec8e3"/>
+</svg>
