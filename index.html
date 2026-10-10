@@ -1,69 +1,75 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https:; img-src 'self' data: blob: https:; media-src 'self' data: blob: https:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>CINÉ-GENESIS · Studio de films IA</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f7fb;--p:#fff;--ink:#0b1a2b;--dim:#6b7c93;--ln:#d5deea;--a:#0a84ff;--b:#ff5a1f;--ok:#12b76a;--er:#e5383b;--m:'Share Tech Mono',ui-monospace,monospace}
+:root{--bg:#08090c;--p:#111319;--p2:#171a22;--ink:#f5f0e7;--dim:#aaa69f;--ln:#32343a;--a:#efbd63;--a2:#ffe1a1;--b:#7ec8e3;--ok:#71d6a6;--er:#ff7d86;--m:'SFMono-Regular',Consolas,'Liberation Mono',monospace;--ui:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;--display:Georgia,'Times New Roman',serif}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font:16px/1.5 Rajdhani,system-ui,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh;padding-bottom:70px}
-body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(var(--ln) 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,var(--ln) 1px,transparent 1px) 0 0/40px 40px;opacity:.5}
-body::after{content:"";position:fixed;top:0;left:0;right:0;height:6px;z-index:25;background:repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 10px);opacity:.25;pointer-events:none}
-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink);padding:10px 18px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
-.logo{font:800 20px Orbitron;letter-spacing:.1em}.logo b{color:var(--a)}.logo i{display:block;font:10px var(--m);letter-spacing:.3em;color:var(--dim);font-style:normal}
-#steps{display:flex;gap:4px;flex-wrap:wrap}
-.st{font:11px var(--m);letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border:1px solid var(--ln);background:#fff;color:var(--dim)}
-.st.ok{color:var(--ink);border-color:var(--ink)}.st.on{background:var(--ink);color:#fff;border-color:var(--ink)}.st:disabled{opacity:.45}.st.on:disabled{opacity:1}
+body{font:16px/1.6 var(--ui);color:var(--ink);background:radial-gradient(circle at 82% -8%,rgba(239,189,99,.17),transparent 34%),radial-gradient(circle at 5% 18%,rgba(126,200,227,.09),transparent 28%),linear-gradient(145deg,#08090c,#0c0e13 62%,#11141a);min-height:100vh;padding-bottom:70px}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/56px 56px;mask-image:linear-gradient(to bottom,#000,transparent 82%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;opacity:.12;pointer-events:none;background-image:repeating-radial-gradient(circle at 20% 30%,transparent 0 1px,rgba(255,255,255,.09) 1px 2px);background-size:5px 5px}
+header{position:sticky;top:0;z-index:20;background:rgba(8,9,12,.9);backdrop-filter:blur(22px);border-bottom:1px solid rgba(239,189,99,.18);padding:15px clamp(16px,3vw,36px);display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.logo{font:700 21px var(--display);letter-spacing:.08em;white-space:nowrap}.logo b{color:var(--a);font-style:italic}.logo i{display:block;font:9px var(--m);letter-spacing:.31em;color:var(--dim);font-style:normal;margin-top:2px}
+#steps{display:flex;gap:6px;justify-content:center;min-width:0;overflow-x:auto;scrollbar-width:none}#steps::-webkit-scrollbar{display:none}
+.st{font:10px var(--m);letter-spacing:.07em;text-transform:uppercase;padding:8px 11px;border:1px solid var(--ln);background:rgba(17,19,25,.76);color:var(--dim);border-radius:999px;white-space:nowrap}
+.st.ok{color:var(--ink);border-color:#635b4d}.st.on{background:linear-gradient(135deg,var(--a2),var(--a));color:#181006;border-color:var(--a);box-shadow:0 0 26px rgba(239,189,99,.2)}.st:disabled{opacity:.42}.st.on:disabled{opacity:1}
 .hb{display:flex;gap:6px;align-items:center}
-main{max-width:1100px;margin:0 auto;padding:22px 16px}
-.hero{background:var(--p);border:1px solid var(--ln);padding:22px;margin-bottom:16px;position:relative}
-.hero::before,.hero::after{content:"";position:absolute;width:14px;height:14px;border:2px solid var(--a)}
-.hero::before{top:-1px;left:-1px;border-right:0;border-bottom:0}.hero::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+main{max-width:1220px;margin:0 auto;padding:clamp(28px,5vw,68px) 18px}
+.hero{background:linear-gradient(145deg,rgba(24,26,34,.97),rgba(12,14,19,.98));border:1px solid rgba(255,255,255,.1);padding:clamp(24px,5vw,58px);margin-bottom:20px;position:relative;border-radius:24px;box-shadow:0 34px 100px rgba(0,0,0,.46),inset 0 1px 0 rgba(255,255,255,.05);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent 2%,var(--a) 20%,rgba(126,200,227,.7) 52%,transparent 90%)}.hero::after{content:"";position:absolute;width:340px;height:340px;border-radius:50%;right:-180px;top:-220px;background:var(--a);filter:blur(90px);opacity:.08;pointer-events:none}
 .lab{font:11px var(--m);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-h2{font:600 28px Orbitron;letter-spacing:.04em;margin:6px 0 8px}h2 b{color:var(--a)}h3{font:600 15px Orbitron;letter-spacing:.06em;margin:16px 0 4px}
+h2{font:600 clamp(32px,5vw,58px)/1.05 var(--display);letter-spacing:-.025em;margin:12px 0 20px;max-width:900px}h2 b{color:var(--a);font-style:italic;font-weight:500}h3{font:700 14px var(--ui);letter-spacing:.09em;margin:24px 0 8px;text-transform:uppercase}
 p.sub{color:var(--dim);margin-bottom:12px;max-width:780px}
-.guide{display:flex;gap:12px;align-items:center;border:1px solid var(--a);background:#eef6ff;padding:12px 14px;margin:10px 0 16px}
-.guide.go{border-color:var(--ok);background:#effaf4}.guide.er{border-color:var(--er);background:#fff1f1;display:block}.guide.wt{border-color:var(--b);background:#fff6f0}
-textarea,input[type=text],select{width:100%;font:13px var(--m);padding:9px;border:1px solid var(--ln);background:#f9fbfd;color:var(--ink);outline:0}
-textarea:focus,input:focus,select:focus{border-color:var(--a);background:#fff}textarea{resize:vertical;min-height:70px;margin:4px 0}
+.guide{display:flex;gap:12px;align-items:center;border:1px solid rgba(126,200,227,.3);background:rgba(126,200,227,.07);padding:16px 18px;margin:14px 0 20px;border-radius:14px;color:#dce8ed}
+.guide.go{border-color:rgba(113,214,166,.32);background:rgba(113,214,166,.08)}.guide.er{border-color:rgba(255,125,134,.4);background:rgba(255,125,134,.08);display:block}.guide.wt{border-color:rgba(239,189,99,.35);background:rgba(239,189,99,.08)}
+.privacy{border:1px solid rgba(239,189,99,.23);background:linear-gradient(145deg,rgba(239,189,99,.075),rgba(255,255,255,.015));padding:20px;border-radius:16px;margin:16px 0 20px}.privacy strong{display:block;margin-bottom:8px;font-family:var(--display);font-size:20px;font-weight:500}.privacy ul{margin:12px 0 0 20px;color:var(--dim)}.privacy li{padding:2px 0 3px 4px}.privacy a{color:var(--a2);font-weight:700;text-underline-offset:3px}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 22px}.facts span{border:1px solid var(--ln);border-radius:999px;padding:6px 10px;color:var(--dim);font:10px var(--m);letter-spacing:.06em;text-transform:uppercase}.facts b{color:var(--ink);font-weight:600}
+.check{display:flex;gap:10px;align-items:flex-start;margin:12px 0;color:var(--ink)}.check input{margin-top:5px;accent-color:var(--a)}
+textarea,input[type=text],select{width:100%;font:13px var(--m);padding:13px 14px;border:1px solid #383a41;border-radius:11px;background:#0b0d12;color:var(--ink);outline:0}
+textarea:focus,input:focus,select:focus{border-color:var(--a);box-shadow:0 0 0 3px rgba(239,189,99,.11);background:#0e1016}textarea{resize:vertical;min-height:70px;margin:5px 0}
 label.f{display:block;margin:6px 0}label.f span{display:block}
-button,.btn{font:600 12px var(--m);letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;border:1px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;display:inline-block}
-button:hover:not(:disabled),.btn:hover{background:var(--ink);color:#fff}button:disabled{opacity:.35;cursor:not-allowed}
-.big{background:var(--a);border-color:var(--a);color:#fff;padding:14px 26px;font-size:14px;letter-spacing:.16em}.big:hover:not(:disabled){background:#0066cc;border-color:#0066cc}
+button,.btn{font:700 11px var(--m);letter-spacing:.09em;text-transform:uppercase;padding:10px 15px;border:1px solid #45474e;border-radius:10px;background:#181b22;color:var(--ink);cursor:pointer;display:inline-block;transition:.18s ease}
+button:hover:not(:disabled),.btn:hover{background:#242730;border-color:#8b806c;transform:translateY(-1px)}button:disabled{opacity:.35;cursor:not-allowed}
+button:focus-visible,.btn:focus-visible{outline:3px solid rgba(239,189,99,.28);outline-offset:2px}.big{background:linear-gradient(135deg,var(--a2),var(--a));border-color:var(--a);color:#1b1207;padding:15px 27px;font-size:13px;letter-spacing:.14em;box-shadow:0 12px 32px rgba(239,189,99,.14)}.big:hover:not(:disabled){background:linear-gradient(135deg,#fff0c8,var(--a2));border-color:var(--a2);box-shadow:0 16px 38px rgba(239,189,99,.2)}
 .sm{padding:5px 9px;font-size:10px}.ft{display:flex;justify-content:space-between;gap:10px;margin-top:20px;flex-wrap:wrap;align-items:center}
 .chips{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}.chip{font:11px var(--m);padding:2px 8px;border:1px solid var(--ok);color:var(--ok)}.chip.off{border-color:var(--er);color:var(--er)}.chip.cd{border-color:var(--b);color:var(--b)}
 .gc{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}.gc button.sel{background:var(--a);border-color:var(--a);color:#fff}
 .choice{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:10px 0}
-.ch{border:1px solid var(--ink);padding:16px;cursor:pointer;background:#fff}.ch:hover{background:#f3f8ff}.ch.sel{border-color:var(--a);box-shadow:inset 0 0 0 2px var(--a);background:#eef6ff}.ch b{display:block;font:600 15px Orbitron;margin-bottom:4px}
+.ch{border:1px solid var(--ln);padding:20px;cursor:pointer;background:var(--p2);border-radius:14px}.ch:hover{border-color:#766b59;background:#1d2029}.ch.sel{border-color:var(--a);box-shadow:inset 0 0 0 1px var(--a);background:rgba(239,189,99,.08)}.ch b{display:block;font:700 15px var(--ui);margin-bottom:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-.cd{border:1px solid var(--ln);background:#fff;padding:10px;position:relative}.cd.pk{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}
-.im{position:relative;background:#e8eef6;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:6px;font:11px var(--m);color:var(--dim)}
+.cd{border:1px solid var(--ln);background:rgba(20,22,28,.9);padding:14px;position:relative;border-radius:14px}.cd.pk{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}
+.im{position:relative;background:#0a0c10;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:8px;font:11px var(--m);color:var(--dim);border-radius:9px}
 .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .sp,.sp2{border:2px solid var(--a);border-top-color:transparent;border-radius:50%;animation:r 1s linear infinite}.sp{position:absolute;width:26px;height:26px;z-index:2}.sp2{display:inline-block;width:16px;height:16px;flex:none}@keyframes r{to{transform:rotate(360deg)}}
-.ip{background:#f6f9fc;border:1px solid var(--ln);padding:8px;margin:6px 0}.rw{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;align-items:center}
+.ip{background:#0d0f14;border:1px solid var(--ln);padding:10px;margin:8px 0;border-radius:10px}.rw{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px;align-items:center}
 .up{border:1px solid var(--ink);cursor:pointer}
 .bar{height:6px;background:var(--ln);margin:12px 0}.bar i{display:block;height:100%;background:var(--a);width:0;transition:width .4s}
-.feed{margin:10px 0}.fi{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--ln);font-size:16px}.fi.ok{color:var(--ok)}.fi.er{color:var(--er)}.fi em{margin-left:auto;font:11px var(--m);color:var(--dim);font-style:normal}.fi .ic{width:18px;text-align:center;flex:none}
+.feed{margin:10px 0}.fi{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--ln);font-size:16px}.fi.ok{color:var(--ok)}.fi.er{color:var(--er)}.fi em{margin-left:auto;font:11px var(--m);color:var(--dim);font-style:normal}.fi .ic{min-width:58px;text-align:left;flex:none;font:10px var(--m);text-transform:uppercase;letter-spacing:.04em}
 .mg{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-top:12px}.mn .im{margin:0}.mn .lab{font-size:9px;padding-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--dim);margin-right:6px}.dot.run{background:var(--ok)}.dot.full{background:var(--b);animation:bl 1s infinite}@keyframes bl{50%{opacity:.25}}
 .lad{display:flex;gap:4px;flex-wrap:wrap;margin:6px 0}.lad i{font:11px var(--m);font-style:normal;padding:3px 8px;border:1px solid var(--ln);color:var(--dim)}.lad i.past{border-color:var(--b);color:var(--b)}.lad i.on{background:var(--b);color:#fff;border-color:var(--b)}
-.tl{border:1px solid var(--ln);background:#fff}.tl.ok{border-color:var(--ok)}.tl.run{border-color:var(--a)}.tl.er{border-color:var(--er)}
-.th{position:relative;background:#e8eef6;overflow:hidden}.th img,.th video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tl{border:1px solid var(--ln);background:#14161c;border-radius:13px;overflow:hidden}.tl.ok{border-color:var(--ok)}.tl.run{border-color:var(--a)}.tl.er{border-color:var(--er)}
+.th{position:relative;background:#090b0f;overflow:hidden}.th img,.th video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .tg{position:absolute;top:4px;left:4px;z-index:2;font:10px var(--m);background:var(--ink);color:#fff;padding:1px 5px}.nw{position:absolute;top:4px;right:4px;z-index:2;font:10px var(--m);font-style:normal;background:var(--b);color:#fff;padding:1px 5px}
 .tx{font-size:13px;padding:6px 8px;line-height:1.3}.mt{font:10px var(--m);color:var(--dim);padding:0 8px 7px}
-.kp{display:flex;gap:22px;flex-wrap:wrap;margin:12px 0}.kp b{font:600 22px Orbitron;display:block}
+.kp{display:flex;gap:22px;flex-wrap:wrap;margin:12px 0}.kp b{font:700 22px var(--ui);display:block}
 #con{position:fixed;left:0;right:0;bottom:0;height:34vh;z-index:50;background:#0b1a2b;color:#bfe3ff;transform:translateY(100%);transition:transform .25s;display:flex;flex-direction:column}#con.on{transform:none}
 #lb{flex:1;overflow:auto;padding:8px 12px;font:12px/1.5 var(--m)}.lg.er{color:#ff8a8a}.lg.wr{color:#ffc477}.lg.ok{color:#7dffb5}
-#md{position:fixed;inset:0;background:rgba(11,26,43,.55);z-index:70;display:none;align-items:center;justify-content:center;padding:16px}#md.on{display:flex}#md>div{background:#fff;max-width:640px;width:100%;max-height:85vh;overflow:auto;padding:20px;border:1px solid var(--ink)}
-#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:6px;align-items:center}#toast div{background:var(--ink);color:#fff;font:12px var(--m);padding:8px 14px}
-#pl{position:fixed;inset:0;background:#000;z-index:100;display:none;align-items:center;justify-content:center}#pl.on{display:flex}#pv,#pi{max-width:100vw;max-height:100vh}#sub{position:absolute;left:5%;right:5%;bottom:7%;text-align:center;color:#fff;font:600 22px/1.3 Rajdhani;text-shadow:0 2px 8px #000}#pl button{position:absolute;top:14px;right:14px}
-@media(max-width:700px){h2{font-size:21px}.st{padding:4px 6px;font-size:9px}}
+#md{position:fixed;inset:0;background:rgba(3,7,13,.78);z-index:70;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px)}#md.on{display:flex}#md>div{background:var(--p);max-width:680px;width:100%;max-height:85vh;overflow:auto;padding:24px;border:1px solid var(--ln);border-radius:16px;box-shadow:0 30px 90px #000}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:6px;align-items:center}#toast div{background:#f5f0e7;color:#111319;font:12px var(--m);padding:10px 15px;border-radius:9px;box-shadow:0 12px 40px #000}
+#pl{position:fixed;inset:0;background:#000;z-index:100;display:none;align-items:center;justify-content:center}#pl.on{display:flex}#pv,#pi{max-width:100vw;max-height:100vh}#sub{position:absolute;left:5%;right:5%;bottom:7%;text-align:center;color:#fff;font:700 22px/1.3 var(--ui);text-shadow:0 2px 8px #000}#pl button{position:absolute;top:14px;right:14px}
+@media(max-width:980px){header{grid-template-columns:1fr auto}.logo{grid-column:1}.hb{grid-column:2}#steps{grid-column:1/-1;grid-row:2;justify-content:flex-start;padding-bottom:2px}}
+@media(max-width:700px){main{padding:22px 12px}.hero{padding:24px 18px;border-radius:16px}h2{font-size:34px}.logo{font-size:19px}.st{padding:7px 9px;font-size:9px}.privacy{padding:16px}.ft{align-items:stretch}.ft>.big,.ft>.rw,.ft>.rw>.big{width:100%}.big{width:100%;text-align:center}.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style></head><body>
 <header><div class="logo">CINÉ<b>-GENESIS</b><i>STUDIO DE FILMS IA</i></div><nav id="steps"></nav>
 <div class="hb"><span class="chip" id="qchip"></span><button class="sm" data-a="sess">Mes films</button><button class="sm" data-a="con">Journal</button></div></header>
 <main id="main"></main>
-<div id="con"><div style="display:flex;justify-content:space-between;padding:6px 12px;border-bottom:1px solid #26405c;font:12px var(--m)"><span>JOURNAL TECHNIQUE</span><button class="sm" data-a="con" style="color:#bfe3ff;border-color:#4a6a8a">✕</button></div><div id="lb"></div></div>
+<div id="con"><div style="display:flex;justify-content:space-between;padding:6px 12px;border-bottom:1px solid #26405c;font:12px var(--m)"><span>JOURNAL TECHNIQUE</span><button class="sm" data-a="con" style="color:#bfe3ff;border-color:#4a6a8a">Fermer</button></div><div id="lb"></div></div>
 <div id="md"><div id="mdc"></div></div><div id="toast"></div>
-<div id="pl"><video id="pv" playsinline style="display:none"></video><img id="pi" alt="" style="display:none"><div id="sub"></div><button data-a="stopplay">✕ Quitter</button></div>
+<div id="pl"><video id="pv" playsinline style="display:none"></video><img id="pi" alt="" style="display:none"><div id="sub"></div><button data-a="stopplay">Quitter</button></div>
 
 <script>
 /* ═════════════════════════════════════════════════════════════════════
@@ -133,6 +139,7 @@ const san=t=>String(t==null?'':t).replace(/[‘’]/g,"'").replace(/[“”«»]
    ═════════════════════════════════════════════════════════════════════ */
 let db,P=null,Q=null,page=0,F=1,playing=false,TASK=null;
 const KEYS={list:[],plan:'free'};
+let REMEMBER_KEYS=false;
 const AR=()=>(P?P.ratio:'16:9').replace(':','/');
 const ref=i=>i&&(i.d||i.u);
 const mkKey=k=>({k,img:0,vid:0,txt:0,cool:0,bad:0,off:false});
@@ -149,6 +156,14 @@ async function dbPut(s,v){const k=v.key||v.id;mem[s][k]=v;if(db&&mode=='idb'){tr
 async function dbDel(s,k){delete mem[s][k];if(db&&mode=='idb'){try{return await tx(s,'readwrite',o=>o.delete(k))}catch(e){fall(e)}}try{localStorage.removeItem(lsK(s,k))}catch(e){}}
 async function dbAll(s){if(db&&mode=='idb'){try{return await tx(s,'readonly',o=>o.getAll())}catch(e){fall(e)}}const o=Object.assign({},mem[s]);try{for(let i=0;i<localStorage.length;i++){const n=localStorage.key(i);if(n.startsWith(lsK(s,''))){const v=JSON.parse(localStorage.getItem(n));o[v.key||v.id]=v}}}catch(e){}return Object.values(o)}
 let svT;function save(){if(!P)return;clearTimeout(svT);svT=setTimeout(()=>{P.upd=Date.now();dbPut('sessions',P).catch(e=>log('er','sauvegarde : '+e.message))},350)}
+async function scrubLegacySecrets(){
+  const sessions=await dbAll('sessions');
+  for(const p of sessions){
+    let changed=false;
+    (p.scenes||[]).forEach(s=>(s.shots||[]).forEach(h=>{if(h.task&&h.task.k){delete h.task.k;h.vst='wait';changed=true}}));
+    if(changed)await dbPut('sessions',p);
+  }
+}
 
 /* ═════════════════════════════════════════════════════════════════════
    LOG / TOAST
@@ -259,8 +274,13 @@ async function llmJSON(sys,user,max,temp,imgs){
 function toData(u){
   return new Promise(resolve=>{
     if(!u)return resolve(null);
-    if(u.indexOf('data:')===0)return resolve(u);
-    fetch(u).then(r=>r.blob()).then(b=>{
+    const safe=safeMediaUrl(u,true);
+    if(!safe)return resolve(null);
+    if(safe.indexOf('data:')===0)return resolve(safe);
+    fetch(safe,{credentials:'omit',referrerPolicy:'no-referrer'}).then(r=>{
+      if(!r.ok)throw new Error('média HTTP '+r.status);
+      return r.blob();
+    }).then(b=>{
       const o=URL.createObjectURL(b),im=new Image();
       im.onload=()=>{
         try{
@@ -277,6 +297,18 @@ function toData(u){
     }).catch(()=>resolve(null));
   });
 }
+function safeMediaUrl(value,allowImageData){
+  const raw=String(value||'').trim();
+  if(allowImageData&&/^data:image\/(png|jpeg|webp);base64,/i.test(raw))return raw;
+  let u;
+  try{u=new URL(raw,location.href)}catch(e){return null}
+  if(u.protocol!='https:'||u.username||u.password)return null;
+  const h=u.hostname.toLowerCase().replace(/^\[|\]$/g,'');
+  if(h=='localhost'||h.endsWith('.localhost')||h.endsWith('.local')||h.endsWith('.internal')||h=='::1'||h=='0.0.0.0'||h.startsWith('127.')||h.startsWith('10.')||h.startsWith('192.168.')||h.startsWith('169.254.'))return null;
+  if(h.includes(':')&&/^(fc|fd|fe8|fe9|fea|feb)/.test(h))return null;
+  const m=h.match(/^172\.(\d+)\./);if(m&&+m[1]>=16&&+m[1]<=31)return null;
+  return u.href;
+}
 /* Lance la génération d'image et retourne immédiatement l'URL.
    La conversion en data URI se fait en arrière-plan (utilisée plus tard
    seulement si l'image sert de référence à une autre génération). */
@@ -285,7 +317,8 @@ function mkImg(prompt,refUris,ratio){
   if(refUris&&refUris.length)body.extra_body.image=refUris.filter(Boolean).slice(0,4);
   return call('img',API+'/images/generations',body,3).then(r=>r.json()).then(d=>{
     const it=d.data&&d.data[0];
-    const u=it&&(it.url||(it.b64_json&&'data:image/png;base64,'+it.b64_json));
+    const raw=it&&(it.url||(it.b64_json&&'data:image/png;base64,'+it.b64_json));
+    const u=safeMediaUrl(raw,true);
     if(!u)throw new Error('pas d\'image reçue');
     const img={u:u,d:u.indexOf('data:')===0?u:null};
     if(!img.d){
@@ -349,6 +382,7 @@ function setP(p){
     s.busy=false;
     (s.shots||[]).forEach(h=>{
       h.busy=false;
+      if(h.task&&h.task.k){delete h.task.k;h.vst='wait'}
       if(h.vst=='run'&&!h.task)h.vst='wait';
     });
   });
@@ -479,17 +513,17 @@ const nextBtn=(a,l,x)=>'<button class="big" id="nx" data-a="'+a+'" data-lbl="'+e
 function syncNext(){const b=$('#nx');if(!b)return;const bz=anyBusy();b.disabled=bz||b.dataset.off=='1';b.textContent=bz?'Images en cours…':b.dataset.lbl+' →'}
 const imBox=(o,r)=>'<div class="im" style="aspect-ratio:'+(r||AR())+'">'+(o.img?'<img src="'+esc(ref(o.img))+'" alt="">':'<span>'+(o.busy?'création…':'pas d\'image')+'</span>')+(o.busy?'<i class="sp"></i>':'')+'</div>';
 const imgPanel=o=>'<div class="ip"><input type="text" data-mod="'+o.id+'" placeholder="Votre demande : ex. cheveux roux, ajoute un chapeau…" '+(o.busy?'disabled':'')+'>'+
-  '<div class="rw"><button class="sm" data-a="mod" data-id="'+o.id+'" '+(o.busy||!o.img?'disabled':'')+'>✎ Modifier cette image</button>'+
-  '<button class="sm" data-a="gen" data-id="'+o.id+'" '+(o.busy?'disabled':'')+'>↻ Nouvelle image</button>'+
-  '<label class="sm btn up" '+(o.busy?'style="opacity:.35;pointer-events:none"':'')+'>⬆ Ma photo<input type="file" accept="image/*" hidden data-up="'+o.id+'"></label></div>'+
+  '<div class="rw"><button class="sm" data-a="mod" data-id="'+o.id+'" '+(o.busy||!o.img?'disabled':'')+'>Modifier cette image</button>'+
+  '<button class="sm" data-a="gen" data-id="'+o.id+'" '+(o.busy?'disabled':'')+'>Nouvelle image</button>'+
+  '<label class="sm btn up" '+(o.busy?'style="opacity:.35;pointer-events:none"':'')+'>Ma photo<input type="file" accept="image/*" hidden data-up="'+o.id+'"></label></div>'+
   (o.err?'<div class="lab" style="color:var(--er);margin-top:4px">'+esc(o.err)+'</div>':'')+'</div>';
 const fld=(o,f,l,ta)=>'<label class="f"><span class="lab">'+l+'</span>'+(ta?'<textarea data-f="'+f+'" data-id="'+o.id+'" rows="'+ta+'">'+esc(o[f])+'</textarea>':'<input type="text" data-f="'+f+'" data-id="'+o.id+'" value="'+esc(o[f])+'">')+'</label>';
 const csv=(o,l)=>'<label class="f"><span class="lab">'+l+'</span><input type="text" data-f="chars" data-arr="1" data-id="'+o.id+'" value="'+esc((o.chars||[]).join(', '))+'"></label>';
-const charCard=c=>'<div class="cd" id="c-'+c.id+'">'+imBox(c,'3/4')+imgPanel(c)+fld(c,'name','Nom')+fld(c,'role','Rôle')+fld(c,'desc','Fiche physique (anglais)',3)+fld(c,'outfit','Costume (anglais)',2)+'<div class="rw"><button class="sm" data-a="del" data-id="'+c.id+'" '+(c.busy?'disabled':'')+'>🗑 Supprimer</button></div></div>';
-const charIn=c=>'<div class="cd" id="i-'+c.id+'">'+imBox(c,'3/4')+fld(c,'name','Nom')+fld(c,'desc','Description (ou importez une photo : l\'IA la décrit)',3)+'<div class="rw"><label class="sm btn up" '+(c.busy?'style="opacity:.35;pointer-events:none"':'')+'>⬆ Importer une photo<input type="file" accept="image/*" hidden data-up="'+c.id+'"></label><button class="sm" data-a="del" data-id="'+c.id+'">🗑</button></div></div>';
-const sceneCard=(s,i)=>'<div class="cd" id="c-'+s.id+'"><div class="lab">Scène '+(i+1)+'</div>'+imBox(s)+imgPanel(s)+fld(s,'title','Titre')+fld(s,'summary','Résumé',3)+fld(s,'decor','Décor (anglais)',2)+fld(s,'mood','Ambiance (anglais)')+csv(s,'Personnages présents (séparés par des virgules)')+fld(s,'dialogue','Dialogues (NOM: réplique)',4)+'<div class="rw"><button class="sm" data-a="del" data-id="'+s.id+'" '+(s.busy?'disabled':'')+'>🗑 Supprimer la scène</button></div></div>';
-const shotCard=h=>'<div class="cd" id="c-'+h.id+'">'+imBox(h)+imgPanel(h)+fld(h,'size','Type de plan (wide, medium, close-up…)')+fld(h,'action','Action visuelle (anglais)',3)+fld(h,'camera','Caméra (anglais)')+csv(h,'Personnages dans le plan')+fld(h,'who','Qui parle')+fld(h,'line','Réplique dite (français)',2)+'<div class="rw"><button class="sm" data-a="del" data-id="'+h.id+'" '+(h.busy?'disabled':'')+'>🗑 Supprimer le plan</button></div></div>';
-const mini=o=>'<div class="mn" id="m-'+o.id+'"><div class="im" style="aspect-ratio:'+(o.role!==undefined?'3/4':AR())+'">'+(o.img?'<img src="'+esc(ref(o.img))+'" alt="">':'<span>'+(o.err?'✕':'…')+'</span>')+(o.busy?'<i class="sp"></i>':'')+'</div><div class="lab">'+esc(o.name||o.title||o.size||'')+'</div></div>';
+const charCard=c=>'<div class="cd" id="c-'+c.id+'">'+imBox(c,'3/4')+imgPanel(c)+fld(c,'name','Nom')+fld(c,'role','Rôle')+fld(c,'desc','Fiche physique (anglais)',3)+fld(c,'outfit','Costume (anglais)',2)+'<div class="rw"><button class="sm" data-a="del" data-id="'+c.id+'" '+(c.busy?'disabled':'')+'>Supprimer</button></div></div>';
+const charIn=c=>'<div class="cd" id="i-'+c.id+'">'+imBox(c,'3/4')+fld(c,'name','Nom')+fld(c,'desc','Description (ou importez une photo : l\'IA la décrit)',3)+'<div class="rw"><label class="sm btn up" '+(c.busy?'style="opacity:.35;pointer-events:none"':'')+'>Importer une photo<input type="file" accept="image/*" hidden data-up="'+c.id+'"></label><button class="sm" data-a="del" data-id="'+c.id+'">Supprimer</button></div></div>';
+const sceneCard=(s,i)=>'<div class="cd" id="c-'+s.id+'"><div class="lab">Scène '+(i+1)+'</div>'+imBox(s)+imgPanel(s)+fld(s,'title','Titre')+fld(s,'summary','Résumé',3)+fld(s,'decor','Décor (anglais)',2)+fld(s,'mood','Ambiance (anglais)')+csv(s,'Personnages présents (séparés par des virgules)')+fld(s,'dialogue','Dialogues (NOM: réplique)',4)+'<div class="rw"><button class="sm" data-a="del" data-id="'+s.id+'" '+(s.busy?'disabled':'')+'>Supprimer la scène</button></div></div>';
+const shotCard=h=>'<div class="cd" id="c-'+h.id+'">'+imBox(h)+imgPanel(h)+fld(h,'size','Type de plan (wide, medium, close-up…)')+fld(h,'action','Action visuelle (anglais)',3)+fld(h,'camera','Caméra (anglais)')+csv(h,'Personnages dans le plan')+fld(h,'who','Qui parle')+fld(h,'line','Réplique dite (français)',2)+'<div class="rw"><button class="sm" data-a="del" data-id="'+h.id+'" '+(h.busy?'disabled':'')+'>Supprimer le plan</button></div></div>';
+const mini=o=>'<div class="mn" id="m-'+o.id+'"><div class="im" style="aspect-ratio:'+(o.role!==undefined?'3/4':AR())+'">'+(o.img?'<img src="'+esc(ref(o.img))+'" alt="">':'<span>'+(o.err?'Erreur':'En attente')+'</span>')+(o.busy?'<i class="sp"></i>':'')+'</div><div class="lab">'+esc(o.name||o.title||o.size||'')+'</div></div>';
 const LBL={wait:'en attente',run:'en cours',ok:'prête',er:'échec'};
 const tile=(h,i)=>'<div class="tl '+h.vst+'" id="t-'+h.id+'"><div class="th" style="aspect-ratio:'+AR()+'">'+(h.video?'<video src="'+esc(h.video)+'" controls playsinline preload="metadata" data-id="'+h.id+'"></video>':h.img?'<img src="'+esc(ref(h.img))+'" alt="">':'')+'<b class="tg">'+i+'</b>'+(h.video&&!h.seen?'<em class="nw">NOUVEAU</em>':'')+'</div><div class="tx">'+esc(h.line?(h.who?h.who+' : ':'')+h.line:h.action||'')+'</div><div class="mt">'+(h.img?LBL[h.vst]||'':'image manquante')+(h.vst=='run'&&h.msg?' · '+esc(h.msg):'')+(h.err?' · '+esc(h.err):'')+'</div>'+(h.vst=='er'?'<div style="padding:0 8px 8px"><button class="sm" data-a="retry" data-id="'+h.id+'">Relancer</button></div>':'')+'</div>';
 function refresh(id){
@@ -509,7 +543,7 @@ function refresh(id){
    ═════════════════════════════════════════════════════════════════════ */
 function fd(t){const it={t:t,s:'run',at:Date.now()};TASK.items.push(it);paintFeed();return it}
 function fdDone(it,t){it.s='ok';if(t)it.t=t;paintFeed()}
-function paintFeed(){const e=$('#feed');if(!e||!TASK)return;const n=Date.now();e.innerHTML=TASK.items.map(i=>'<div class="fi '+i.s+'"><span class="ic">'+(i.s=='ok'?'✓':i.s=='er'?'✕':'<i class="sp2"></i>')+'</span><span>'+esc(i.t)+'</span>'+(i.s=='run'?'<em>'+Math.round((n-i.at)/1000)+' s</em>':'')+'</div>').join('')}
+function paintFeed(){const e=$('#feed');if(!e||!TASK)return;const n=Date.now();e.innerHTML=TASK.items.map(i=>'<div class="fi '+i.s+'"><span class="ic">'+(i.s=='ok'?'Terminé':i.s=='er'?'Erreur':'<i class="sp2"></i>')+'</span><span>'+esc(i.t)+'</span>'+(i.s=='run'?'<em>'+Math.round((n-i.at)/1000)+' s</em>':'')+'</div>').join('')}
 function setPg(d,t){if(!TASK)return;TASK.pg=[d,t];pgb()}
 function pgb(){const b=$('#pgb');if(b&&TASK&&TASK.pg)b.style.width=Math.round(TASK.pg[0]/Math.max(1,TASK.pg[1])*100)+'%'}
 function setTiles(l){TASK.tiles=l;const e=$('#tiles');if(e)e.innerHTML=l.map(mini).join('')}
@@ -522,7 +556,7 @@ function workView(){
     '<div class="bar"><i id="pgb"></i></div>'+
     '<div id="feed" class="feed"></div>'+
     '<div class="grid mg" id="tiles">'+((T.tiles||[]).map(mini).join(''))+'</div>'+
-    (T.err?'':'<div class="ft"><span></span>'+btn('stoptask','■ Arrêter')+'</div>')+'</div>';
+    (T.err?'':'<div class="ft"><span></span>'+btn('stoptask','Arrêter')+'</div>')+'</div>';
 }
 async function task(step,title,fn,after){
   if(TASK)return;
@@ -695,67 +729,71 @@ function runShots(){
    ═════════════════════════════════════════════════════════════════════ */
 const V={0:{},1:{},2:{},3:{},4:{},5:{},6:{}};
 
-V[0].cfg=()=>'<div class="hero">'+hd(1,'Vos clés API <b>Agnès</b>')+guide('👉 À vous : collez vos clés Agnès (une par ligne), puis cliquez sur le bouton. Avec plusieurs clés, tout va beaucoup plus vite. Elles restent mémorisées sur cet appareil.')+
-  '<textarea id="keys" rows="6" spellcheck="false" placeholder="sk-…&#10;sk-…">'+esc(KEYS.list.map(k=>k.k).join('\n'))+'</textarea>'+
+V[0].cfg=()=>'<div class="hero">'+hd(1,'Connexion à <b>Agnès AI</b>')+guide('Cette application fonctionne exclusivement avec une clé API Agnès AI. Une clé OpenAI, Gemini ou Anthropic ne convient pas.')+
+  '<div class="facts"><span><b>1 fichier</b> autonome</span><span><b>7 étapes</b> guidées</span><span><b>Projets</b> dans le navigateur</span></div>'+
+  '<div class="privacy"><strong>Clé et confidentialité</strong><p>Vous n\'avez pas encore de clé ? <a href="https://agnes-ai.com/" target="_blank" rel="noopener noreferrer">Accéder au site officiel d\'Agnès AI</a>, puis choisissez Free API ou Access API.</p><ul><li>Les synopsis, dialogues, descriptions, images et vidéos utilisés par les fonctions IA sont envoyés à Agnès.</li><li>Les projets sont sauvegardés dans ce navigateur; les vidéos peuvent rester des liens distants fournis par Agnès.</li><li>Les clés ne sont jamais incluses dans un export de projet.</li></ul></div>'+
+  '<label class="f"><span class="lab">Vos clés API Agnès, une par ligne</span><textarea id="keys" rows="6" spellcheck="false" autocomplete="off" placeholder="Collez votre clé ici">'+esc(KEYS.list.map(k=>k.k).join('\n'))+'</textarea></label>'+
   '<label class="f"><span class="lab">Type de clés</span><select id="plan"><option value="free" '+(KEYS.plan=='free'?'selected':'')+'>Gratuites — vidéo avec dialogue intégré</option><option value="plan" '+(KEYS.plan=='plan'?'selected':'')+'>Payantes (Token Plan) — vidéo 720P, plus rapide</option></select></label>'+
-  '<div id="kl" class="chips"></div>'+foot('',nextBtn('savekeys','Valider mes clés'))+'</div>';
+  '<label class="check"><input id="privacyAck" type="checkbox"><span>Je comprends que les contenus utilisés par les fonctions IA seront traités par Agnès.</span></label>'+
+  '<label class="check"><input id="rememberKeys" type="checkbox" '+(REMEMBER_KEYS?'checked':'')+'><span>Mémoriser mes clés sur cet appareil. Sinon, elles restent uniquement pour cet onglet.</span></label>'+
+  '<div id="kl" class="chips"></div>'+foot(KEYS.list.length?btn('clearkeys','Effacer les clés','sm'):'',nextBtn('savekeys','Valider mes clés'))+'</div>';
 
 V[1].cfg=()=>{
   const sel=P.genre&&P.genre.name;
-  return '<div class="hero">'+hd(2,'Quel <b>film</b> voulez-vous créer ?')+guide('👉 À vous : choisissez un genre et un format, écrivez votre idée puis cliquez sur Lancer. L\'IA fera tout le reste.')+
+  return '<div class="hero">'+hd(2,'Quel <b>film</b> voulez-vous créer ?')+guide(' À vous : choisissez un genre et un format, écrivez votre idée puis cliquez sur Lancer. L\'IA fera tout le reste.')+
     '<h3>1 · Genre</h3>'+
     G.map(([c,l])=>'<div class="lab">'+c+'</div><div class="gc">'+l.map(x=>{const p=x.split('|');return '<button class="'+(sel==p[0]?'sel':'')+'" data-a="genre" data-n="'+esc(p[0])+'" data-s="'+esc(p[1])+'">'+esc(p[0])+'</button>'}).join('')+'</div>').join('')+
     '<h3>2 · Format de l\'image</h3><div class="gc">'+[['16:9','Paysage 16:9 (cinéma)'],['9:16','Portrait 9:16 (mobile)'],['1:1','Carré 1:1']].map(r=>'<button class="'+(P.ratio==r[0]?'sel':'')+'" data-a="ratio" data-n="'+r[0]+'">'+r[1]+'</button>').join('')+'</div>'+
     foot(btn('go','← Précédent','','data-n="0"'),nextBtn('go','Continuer',sel?'data-n="2"':'disabled data-off="1"'))+'</div>';
 };
 
-V[2].in=()=>'<div class="hero">'+hd(3,'Votre <b>idée</b> de film')+guide('👉 À vous : écrivez votre idée, même en 2 lignes. Ensuite, tout est automatique jusqu\'aux vidéos.')+
+V[2].in=()=>'<div class="hero">'+hd(3,'Votre <b>idée</b> de film')+guide(' À vous : écrivez votre idée, même en 2 lignes. Ensuite, tout est automatique jusqu\'aux vidéos.')+
   '<textarea id="synraw" rows="8" data-f="synRaw" data-id="P" placeholder="Ex. Un vieux projectionniste découvre une bobine qui montre l\'avenir de son village…">'+esc(P.synRaw)+'</textarea>'+
-  foot(btn('go','← Précédent','','data-n="1"'),'<span class="rw">'+btn('synasis','Garder mon texte tel quel')+nextBtn('synai','✦ Analyser avec l\'IA')+'</span>')+'</div>';
+  foot(btn('go','← Précédent','','data-n="1"'),'<span class="rw">'+btn('synasis','Garder mon texte tel quel')+nextBtn('synai',' Analyser avec l\'IA')+'</span>')+'</div>';
 
-V[2].pick=()=>'<div class="hero">'+hd(3,'Choisissez votre <b>synopsis</b>')+guide('👉 À vous : la version de base (en haut) est toujours retenue. Cochez les suggestions que vous voulez y intégrer, ou aucune, puis validez.')+
+V[2].pick=()=>'<div class="hero">'+hd(3,'Choisissez votre <b>synopsis</b>')+guide(' À vous : la version de base (en haut) est toujours retenue. Cochez les suggestions que vous voulez y intégrer, ou aucune, puis validez.')+
   '<div class="cd pk"><div class="lab">Votre synopsis, bien réécrit</div><p>'+esc(P.syn.base)+'</p></div>'+
   '<div class="grid" style="margin-top:12px">'+P.syn.sugg.map((s,i)=>'<label class="cd" style="cursor:pointer"><span class="lab">Suggestion '+(i+1)+'</span><p>'+esc(s)+'</p><input type="checkbox" data-sg="'+i+'" '+((P.syn.sel||[]).indexOf(i)>=0?'checked':'')+' style="width:auto"> Intégrer à ma version</label>').join('')+'</div>'+
   foot(btn('synedit','← Modifier mon texte'),nextBtn('synok','Valider ce choix'))+'</div>';
 
-V[2].fin=()=>'<div class="hero">'+hd(3,'Votre <b>synopsis</b> final')+guide('✓ Synopsis prêt. 👉 Relisez-le, modifiez-le si besoin, puis cliquez sur Suivant. Il guidera tout le film.','go')+
+V[2].fin=()=>'<div class="hero">'+hd(3,'Votre <b>synopsis</b> final')+guide(' Synopsis prêt.  Relisez-le, modifiez-le si besoin, puis cliquez sur Suivant. Il guidera tout le film.','go')+
   '<label class="f"><span class="lab">Titre du film</span><input type="text" data-f="title" data-id="P" value="'+esc(P.title)+'"></label>'+
   '<label class="f"><span class="lab">Synopsis</span><textarea data-f="final" data-id="P" rows="10">'+esc(P.final)+'</textarea></label>'+
   foot(btn('synback','← '+(P.syn?'Revoir les propositions':'Modifier mon texte')),nextBtn('go','Continuer vers les personnages','data-n="3"'))+'</div>';
 
-V[3].cfg=()=>'<div class="hero">'+hd(4,'Les <b>personnages</b>')+guide('👉 À vous : choisissez comment créer vos personnages. Les portraits sont ensuite générés automatiquement.')+
-  '<div class="choice"><div class="ch" data-a="chai"><b>✦ L\'IA crée les personnages</b>Elle lit votre synopsis, imagine les personnages et crée leurs portraits. (Recommandé)</div></div>'+
+V[3].cfg=()=>'<div class="hero">'+hd(4,'Les <b>personnages</b>')+guide(' À vous : choisissez comment créer vos personnages. Les portraits sont ensuite générés automatiquement.')+
+  '<div class="choice"><div class="ch" data-a="chai"><b> L\'IA crée les personnages</b>Elle lit votre synopsis, imagine les personnages et crée leurs portraits. (Recommandé)</div></div>'+
   '<h3>Ou utilisez vos propres personnages</h3><p class="sub">Ajoutez vos photos ou vos descriptions. L\'IA analyse les photos et crée les portraits manquants.</p>'+
   '<div class="grid" id="own">'+P.chars.map(charIn).join('')+'</div>'+
   '<div class="rw" style="margin-top:10px">'+btn('addchar','+ Ajouter un personnage')+(P.chars.length?btn('chown','Utiliser mes personnages →','big'):'')+'</div>'+
   foot(btn('go','← Précédent','','data-n="2"'))+'</div>';
 
-V[3].rev=()=>'<div class="hero">'+hd(4,'Vos <b>personnages</b>')+guide('✓ Portraits créés. 👉 Vérifiez-les. Sous chaque image : <b>Modifier</b> = part de l\'image actuelle avec votre demande · <b>Nouvelle image</b> = repart de la fiche · <b>Ma photo</b> = importe votre image. Puis cliquez sur Continuer.','go')+
+V[3].rev=()=>'<div class="hero">'+hd(4,'Vos <b>personnages</b>')+guide(' Portraits créés.  Vérifiez-les. Sous chaque image : <b>Modifier</b> = part de l\'image actuelle avec votre demande · <b>Nouvelle image</b> = repart de la fiche · <b>Ma photo</b> = importe votre image. Puis cliquez sur Continuer.','go')+
   '<div class="grid">'+(P.chars.map(charCard).join('')||'<span class="lab">Aucun personnage.</span>')+'</div>'+
-  '<div class="rw" style="margin-top:12px">'+btn('addchar','+ Ajouter un personnage')+btn('redo','↺ Refaire avec l\'IA','','data-n="3"')+'</div>'+
+  '<div class="rw" style="margin-top:12px">'+btn('addchar','+ Ajouter un personnage')+btn('redo',' Refaire avec l\'IA','','data-n="3"')+'</div>'+
   foot(btn('go','← Précédent','','data-n="2"'),nextBtn('go','Continuer vers les scènes','data-n="4"'))+'</div>';
 
-V[4].cfg=()=>'<div class="hero">'+hd(5,'Les <b>scènes</b>')+guide('👉 À vous : choisissez la longueur du film, puis lancez. L\'IA écrit le scénario, les dialogues, puis crée automatiquement l\'image de chaque scène.')+
+V[4].cfg=()=>'<div class="hero">'+hd(5,'Les <b>scènes</b>')+guide(' À vous : choisissez la longueur du film, puis lancez. L\'IA écrit le scénario, les dialogues, puis crée automatiquement l\'image de chaque scène.')+
   '<div class="gc">'+[[3,'Court · 3 scènes'],[5,'Moyen · 5 scènes'],[8,'Long · 8 scènes'],[12,'Très long · 12 scènes']].map(n=>'<button class="'+((P.nsc||5)==n[0]?'sel':'')+'" data-a="nsc" data-n="'+n[0]+'">'+n[1]+'</button>').join('')+'</div>'+
-  foot(btn('go','← Précédent','','data-n="3"'),nextBtn('scgo','✦ Écrire le scénario'))+'</div>';
+  foot(btn('go','← Précédent','','data-n="3"'),nextBtn('scgo',' Écrire le scénario'))+'</div>';
 
-V[4].rev=()=>'<div class="hero">'+hd(5,'Vos <b>scènes</b>')+guide('✓ Scénario et images prêts. 👉 Relisez les dialogues, modifiez ce que vous voulez, puis cliquez sur Continuer.','go')+
+V[4].rev=()=>'<div class="hero">'+hd(5,'Vos <b>scènes</b>')+guide(' Scénario et images prêts.  Relisez les dialogues, modifiez ce que vous voulez, puis cliquez sur Continuer.','go')+
   '<div class="grid">'+P.scenes.map(sceneCard).join('')+'</div>'+
-  '<div class="rw" style="margin-top:12px">'+btn('addscene','+ Ajouter une scène')+btn('redo','↺ Refaire avec l\'IA','','data-n="4"')+'</div>'+
+  '<div class="rw" style="margin-top:12px">'+btn('addscene','+ Ajouter une scène')+btn('redo',' Refaire avec l\'IA','','data-n="4"')+'</div>'+
   foot(btn('go','← Précédent','','data-n="3"'),nextBtn('go','Continuer vers les plans','data-n="5"'))+'</div>';
 
-V[5].cfg=()=>'<div class="hero">'+hd(6,'Les <b>plans</b>')+guide('👉 L\'IA va découper chaque scène en plans, puis créer l\'image de départ de chaque plan.')+
-  foot(btn('go','← Précédent','','data-n="4"'),nextBtn('plgo','✦ Découper et créer les images'))+'</div>';
+V[5].cfg=()=>'<div class="hero">'+hd(6,'Les <b>plans</b>')+guide(' L\'IA va découper chaque scène en plans, puis créer l\'image de départ de chaque plan.')+
+  foot(btn('go','← Précédent','','data-n="4"'),nextBtn('plgo',' Découper et créer les images'))+'</div>';
 
-V[5].rev=()=>'<div class="hero">'+hd(6,'Vos <b>plans</b>')+guide('✓ Plans et images prêts. 👉 Chaque image deviendra une vidéo. Modifiez les images ou les répliques si besoin, puis cliquez sur Continuer.','go')+
+V[5].rev=()=>'<div class="hero">'+hd(6,'Vos <b>plans</b>')+guide(' Plans et images prêts.  Chaque image deviendra une vidéo. Modifiez les images ou les répliques si besoin, puis cliquez sur Continuer.','go')+
   P.scenes.map((s,i)=>'<h3>Scène '+(i+1)+' — '+esc(s.title)+'</h3><div class="grid">'+((s.shots||[]).map(shotCard).join('')||'<span class="lab">Pas de plan.</span>')+'</div><div class="rw" style="margin-top:6px">'+btn('addshot','+ Ajouter un plan','sm','data-id="'+s.id+'"')+'</div>').join('')+
-  '<div class="rw" style="margin-top:12px">'+btn('redo','↺ Refaire avec l\'IA','','data-n="5"')+'</div>'+
+  '<div class="rw" style="margin-top:12px">'+btn('redo',' Refaire avec l\'IA','','data-n="5"')+'</div>'+
   foot(btn('go','← Précédent','','data-n="4"'),nextBtn('go','Continuer vers les vidéos','data-n="6"'))+'</div>';
 
 V[6].cfg=()=>'<div class="hero">'+hd(7,'Les <b>vidéos</b>')+
   '<p class="sub">Chaque image de plan est transformée en vidéo par Agnès. La file d\'attente vidéo est souvent saturée : l\'app envoie les plans un par un, et si c\'est plein elle attend toute seule (3, 6, 12, 24… minutes) avant de réessayer. <b>Gardez cet onglet ouvert.</b> En attendant, regardez le film en « animatic » (images + voix).</p>'+
   '<div class="cd" id="qp" style="margin:12px 0"></div>'+
-  '<div class="rw">'+btn('play','🎬 Voir le film maintenant')+btn('export','Exporter le projet','sm')+'</div>'+
+  '<div class="rw">'+btn('play',' Voir le film maintenant')+btn('export','Exporter le projet','sm')+'</div>'+
   '<div class="kp" id="kp"></div>'+
   '<div class="grid" id="tiles" style="margin-top:12px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">'+shots().map((x,i)=>tile(x.h,i+1)).join('')+'</div>'+
   foot(btn('go','← Précédent','','data-n="5"'))+'</div>';
@@ -789,11 +827,11 @@ function keysChips(){const e=$('#kl');if(!e)return;e.innerHTML=KEYS.list.map((k,
 const fmt=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
 function qHtml(ok,left){
   const a=shots();
-  if(a.length&&ok==a.length)return guide('<b>🎉 Toutes les vidéos sont prêtes !</b> Cliquez sur « Voir le film maintenant », ou regardez chaque plan ci-dessous.','go');
-  if(!Q.on&&Q.st=='idle'&&!ok)return guide('<b>Prêt à créer les vidéos.</b> Vos images de plans sont validées. 👉 Cliquez sur le bouton : tout se passe ensuite automatiquement.')+'<div class="rw">'+btn('qstart','▶ Lancer la production des vidéos','big')+'</div>';
-  if(!Q.on)return guide('<b>Production en pause.</b> '+ok+' vidéo(s) prête(s), '+left+' restante(s).','wt')+'<div class="rw">'+btn('qstart','▶ Reprendre la production','big')+'</div>';
-  if(Q.st=='full')return guide('<b>⏳ File d\'attente Agnès saturée.</b> Aucune requête n\'est envoyée pendant l\'attente. Prochain test dans <b id="cd" style="font:600 18px Orbitron">'+fmt((Q.next-Date.now())/1000)+'</b>','wt')+'<div class="lab">Paliers d\'attente</div><div class="lad">'+BACK.map((m,i)=>'<i class="'+(i==Q.step-1?'on':i<Q.step-1?'past':'')+'">'+m+' min</i>').join('')+'</div><div class="rw">'+btn('qnow','Tester maintenant','sm')+btn('qpause','❚❚ Mettre en pause','sm')+'</div>';
-  return guide('<b>⚙ Production en cours.</b> Les vidéos sont envoyées à Agnès et apparaissent ci-dessous dès qu\'elles sont prêtes ('+ok+' prête(s), '+left+' restante(s)).')+'<div class="rw">'+btn('qpause','❚❚ Mettre en pause','sm')+'</div>';
+  if(a.length&&ok==a.length)return guide('<b>Toutes les vidéos sont prêtes.</b> Cliquez sur « Voir le film maintenant », ou regardez chaque plan ci-dessous.','go');
+  if(!Q.on&&Q.st=='idle'&&!ok)return guide('<b>Prêt à créer les vidéos.</b> Vos images de plans sont validées. Cliquez sur le bouton pour lancer la production.')+'<div class="rw">'+btn('qstart','Lancer la production des vidéos','big')+'</div>';
+  if(!Q.on)return guide('<b>Production en pause.</b> '+ok+' vidéo(s) prête(s), '+left+' restante(s).','wt')+'<div class="rw">'+btn('qstart','Reprendre la production','big')+'</div>';
+  if(Q.st=='full')return guide('<b>File d\'attente Agnès saturée.</b> Aucune requête n\'est envoyée pendant l\'attente. Prochain test dans <b id="cd" style="font:700 18px var(--ui)">'+fmt((Q.next-Date.now())/1000)+'</b>','wt')+'<div class="lab">Paliers d\'attente</div><div class="lad">'+BACK.map((m,i)=>'<i class="'+(i==Q.step-1?'on':i<Q.step-1?'past':'')+'">'+m+' min</i>').join('')+'</div><div class="rw">'+btn('qnow','Tester maintenant','sm')+btn('qpause','Mettre en pause','sm')+'</div>';
+  return guide('<b>Production en cours.</b> Les vidéos sont envoyées à Agnès et apparaissent ci-dessous dès qu\'elles sont prêtes ('+ok+' prête(s), '+left+' restante(s)).')+'<div class="rw">'+btn('qpause','Mettre en pause','sm')+'</div>';
 }
 function qui(){
   const n=Date.now(),c=$('#qchip'),a=shots(),ok=a.filter(x=>x.h.vst=='ok').length,left=a.filter(x=>x.h.vst!='ok'&&x.h.img).length;
@@ -850,7 +888,7 @@ async function launch(h,s){
       if(m)inner=m[1].trim();
     }
   }catch(e){}
-  h.task={id:id,inner:inner,k:o.k};
+  h.task={id:id,inner:inner};
   Q.st='run';Q.step=0;
   log('ok','vidéo envoyée (clé …'+o.k.slice(-4)+')');
   save();qui();
@@ -858,7 +896,8 @@ async function launch(h,s){
 }
 async function poll(h){
   const t=h.task,model=VID[KEYS.plan],end=Date.now()+30*60000;
-  let n=0,miss=0;const key=t.k;
+  let n=0,miss=0;const activeKey=KEYS.list.find(k=>!k.off),key=activeKey&&activeKey.k;
+  if(!key){h.vst='wait';h.err='clé requise pour reprendre le suivi';refresh(h.id);return}
   try{
     await sleep(KEYS.plan=='free'?30000:8000);
     while(Date.now()<end&&P){
@@ -880,10 +919,11 @@ async function poll(h){
         h.msg=d.progress?d.progress+'%':s;
         refresh(h.id);
         if(['completed','succeeded','done','success','finished','ready'].indexOf(s)>=0){
-          const u=(d.metadata&&(d.metadata.url||d.metadata.video_url))||(d.output&&(d.output.url||d.output.video_url))||(d.data&&(d.data.url||d.data.video_url))||d.url||d.video_url;
+          const raw=(d.metadata&&(d.metadata.url||d.metadata.video_url))||(d.output&&(d.output.url||d.output.video_url))||(d.data&&(d.data.url||d.data.video_url))||d.url||d.video_url;
+          const u=safeMediaUrl(raw,false);
           if(!u)throw new Error('terminé sans URL');
           h.video=u;h.vst='ok';h.seen=false;h.err='';
-          log('ok','vidéo prête');toast('🎬 Nouvelle vidéo prête');
+          log('ok','vidéo prête');toast('Nouvelle vidéo prête');
           save();refresh(h.id);
           return;
         }
@@ -986,6 +1026,7 @@ async function onClick(e){
   else if(a=='con')$('#con').classList.toggle('on');
   else if(a=='closemd')$('#md').classList.remove('on');
   else if(a=='savekeys'){
+    if(!$('#privacyAck').checked)return toast('Confirmez d’abord l’avis de confidentialité');
     const ks=Array.from(new Set($('#keys').value.split(/[\s,;]+/).map(s=>s.trim()).filter(s=>s.length>=8)));
     if(!ks.length)return toast('Collez au moins une clé API (une par ligne)');
     KEYS.plan=$('#plan').value;
@@ -993,9 +1034,14 @@ async function onClick(e){
       const old=KEYS.list.find(o=>o.k==k);
       return old||mkKey(k);
     });
-    dbPut('config',{key:'keys',list:ks,plan:KEYS.plan}).catch(er=>log('wr','clés : '+er.message));
-    toast('✓ '+ks.length+' clé(s) enregistrée(s)');
+    REMEMBER_KEYS=$('#rememberKeys').checked;
+    if(REMEMBER_KEYS)dbPut('config',{key:'keys',list:ks,plan:KEYS.plan}).catch(er=>log('wr','clés : '+er.message));
+    else dbDel('config','keys').catch(er=>log('wr','clés : '+er.message));
+    toast(ks.length+' clé(s) prête(s)'+(REMEMBER_KEYS?' et mémorisée(s)':' pour cet onglet'));
     go(Math.max(1,P.last||1));
+  }
+  else if(a=='clearkeys'){
+    KEYS.list=[];REMEMBER_KEYS=false;await dbDel('config','keys');render();toast('Clés effacées de cet appareil');
   }
   else if(a=='genre'){P.genre={name:b.dataset.n,style:b.dataset.s};render(true)}
   else if(a=='ratio'){P.ratio=b.dataset.n;render(true)}
@@ -1041,9 +1087,11 @@ async function onClick(e){
   else if(a=='play')play();
   else if(a=='stopplay')stopPlay();
   else if(a=='export'){
-    const u=URL.createObjectURL(new Blob([JSON.stringify(P)],{type:'application/json'}));
+    const copy=JSON.parse(JSON.stringify(P));
+    (copy.scenes||[]).forEach(s=>(s.shots||[]).forEach(h=>{if(h.task)delete h.task.k}));
+    const u=URL.createObjectURL(new Blob([JSON.stringify(copy)],{type:'application/json'}));
     const l=document.createElement('a');
-    l.href=u;l.download=(P.title||'film')+'.json';l.click();
+    l.href=u;l.download=(P.title||'film')+'.json';l.click();setTimeout(()=>URL.revokeObjectURL(u),1000);
   }
   else if(a=='sess')sessions();
   else if(a=='new'){setP(newP());$('#md').classList.remove('on');page=KEYS.list.length?1:0;render()}
@@ -1089,6 +1137,7 @@ document.addEventListener('change',async e=>{
     if(!im)return toast('Image illisible');
     o.o.img=im;o.o.err='';
     if(o.t=='c'){
+      if(!confirm('Cette photo sera envoyée à Agnès pour être analysée. Continuer ?')){refresh(o.o.id);save();return}
       o.o.busy=true;refresh(o.o.id);
       try{await aiDescribe(o.o);toast('Photo analysée : fiche du personnage remplie')}
       catch(er){log('wr','analyse photo : '+er.message)}
@@ -1112,7 +1161,7 @@ document.addEventListener('play',e=>{
 document.addEventListener('keydown',e=>{if(e.key=='Escape'&&playing)stopPlay()});
 async function sessions(){
   const l=(await dbAll('sessions')).sort((a,b)=>b.upd-a.upd);
-  $('#mdc').innerHTML='<h3>Mes films</h3><p class="sub">Tout est enregistré automatiquement dans ce navigateur : textes, images, vidéos générées.</p><div class="rw">'+btn('new','+ Nouveau film','big')+btn('closemd','Fermer')+'</div>'+
+  $('#mdc').innerHTML='<h3>Mes films</h3><p class="sub">Les projets sont enregistrés dans ce navigateur. Les contenus utilisés par les fonctions IA sont traités par Agnès et les vidéos peuvent rester accessibles par une URL distante.</p><div class="rw">'+btn('new','+ Nouveau film','big')+btn('closemd','Fermer')+'</div>'+
     l.map(p=>{
       const sh=p.scenes.flatMap(s=>s.shots||[]);
       const nv=sh.filter(h=>h.video&&!h.seen).length;
@@ -1130,7 +1179,7 @@ $('#md').addEventListener('click',e=>{if(e.target.id=='md')e.target.classList.re
 function resume(){
   shots().forEach(x=>{
     if(x.h.vst=='run'&&x.h.task){
-      if(KEYS.list.some(k=>k.k==x.h.task.k))poll(x.h);
+      if(KEYS.list.some(k=>!k.off))poll(x.h);
       else x.h.vst='wait';
     }
   });
@@ -1141,7 +1190,8 @@ function resume(){
   catch(e){db=null;fall(e)}
   try{
     const k=await dbGet('config','keys');
-    if(k){KEYS.plan=k.plan||'free';KEYS.list=(k.list||[]).map(mkKey)}
+    if(k){KEYS.plan=k.plan||'free';KEYS.list=(k.list||[]).map(mkKey);REMEMBER_KEYS=KEYS.list.length>0}
+    await scrubLegacySecrets();
     const last=await dbGet('config','last'),p=last&&await dbGet('sessions',last.v);
     setP(p||newP());
   }catch(e){setP(newP())}

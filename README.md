@@ -1,113 +1,205 @@
+# CINÉ-GENESIS
 
-# CINÉ-GENESIS — Studio de films IA
+Studio de création de courts-métrages assisté par intelligence artificielle, dans
+une application web autonome.
 
-## À quoi sert ce script
+CINÉ-GENESIS accompagne la création d'un film depuis l'idée initiale jusqu'aux
+plans vidéo : synopsis, personnages, scènes, storyboard, images de référence et
+séquences animées. L'interface tient dans un seul fichier `index.html` et ne
+nécessite aucun serveur applicatif.
 
-CINÉ-GENESIS est une application web autonome (un seul fichier `index.html`, aucune
-installation serveur, aucune base de données externe) qui permet de créer un
-court-métrage complet généré par intelligence artificielle, étape par étape :
+## Fonctionnalités
 
-1. **Clés API** — vous enregistrez vos clés d'API IA (le script gère plusieurs clés
-   et répartit automatiquement les requêtes pour respecter les limites de débit).
-2. **Genre** — vous choisissez le style de film (fiction, documentaire, anime,
-   cyberpunk, bande-annonce, etc.).
-3. **Synopsis** — l'IA rédige l'histoire.
-4. **Personnages** — l'IA crée les fiches et génère une image de référence pour
-   chaque personnage (le visage et le costume restent cohérents dans tout le film).
-5. **Scènes** — décors, ambiance, dialogues, image d'ambiance par scène.
-6. **Plans** — découpage plan par plan (type de plan, action, caméra, réplique),
-   avec image par plan.
-7. **Vidéos** — chaque plan devient une vidéo courte, assemblées en séquence
-   jouable avec sous-titres.
+- parcours guidé de l'idée au film ;
+- génération du synopsis, des personnages, des scènes et des plans ;
+- création et modification d'images avec références visuelles ;
+- génération vidéo plan par plan ;
+- prise en charge de plusieurs clés API et répartition des requêtes ;
+- sauvegarde automatique et reprise des projets dans le navigateur ;
+- import facultatif de photos avec confirmation avant leur analyse ;
+- lecture du film en vidéo ou en animatique ;
+- export du projet au format JSON ;
+- journal technique intégré pour diagnostiquer les erreurs.
 
-L'application gère aussi : la sauvegarde automatique du projet, la reprise après
-interruption, la file d'attente avec limites de requêtes, la modification d'une
-image par simple demande en français, l'import de vos propres photos, et un
-journal technique pour diagnostiquer les erreurs d'API.
+## API requise
 
-## Le principe « tiroir dans le tiroir » (données imbriquées)
+Cette application utilise exclusivement l'API **Agnès AI**. Une clé OpenAI,
+Anthropic, Google Gemini ou provenant d'un autre fournisseur ne fonctionnera pas.
 
-Le script organise les données comme des tiroirs imbriqués, dans la base
-IndexedDB du navigateur (avec repli automatique sur localStorage si IndexedDB
-est indisponible) :
+Pour obtenir une clé :
 
+1. ouvrez le [site officiel d'Agnès AI](https://agnes-ai.com/) ;
+2. choisissez l'accès **Free API** ou **Access API** proposé par Agnès ;
+3. connectez-vous ou créez un compte ;
+4. créez ou copiez une clé API depuis l'espace développeur Agnès ;
+5. collez cette clé dans le premier écran de CINÉ-GENESIS.
+
+Les offres, quotas, tarifs et noms de modèles peuvent évoluer. Consultez le site
+d'Agnès avant utilisation. Ne publiez jamais votre clé dans le dépôt, une capture
+d'écran, un rapport de bug ou un fichier exporté.
+
+### Configuration technique actuelle
+
+Le fichier `index.html` est déjà configuré pour utiliser :
+
+- API principale : `https://apihub.agnes-ai.com/v1` ;
+- suivi des tâches vidéo : `https://apihub.agnes-ai.com/agnesapi` ;
+- authentification : en-tête `Authorization: Bearer VOTRE_CLE` ;
+- texte : `agnes-3.0-flash`, avec repli sur `agnes-2.5-flash` ;
+- image : `agnes-image-2.5-flash` ;
+- vidéo avec clé gratuite : `agnes-video-v2.0` ;
+- vidéo avec Token Plan : `agnes-video-2.5-flash`.
+
+Routes appelées par l'application :
+
+- `POST /v1/chat/completions` pour l'écriture et l'analyse ;
+- `POST /v1/images/generations` pour les images ;
+- `POST /v1/videos` pour lancer une génération vidéo ;
+- `GET /agnesapi?video_id=...&model_name=...` pour suivre son avancement.
+
+Il n'y a rien à renseigner dans le code pour un usage normal : la clé est saisie
+directement dans l'interface. Les constantes d'API et de modèles se trouvent au
+début du script dans `index.html` si une évolution du service impose leur mise à
+jour.
+
+## Démarrage rapide
+
+### Option 1 : utilisation directe
+
+1. téléchargez le dépôt ;
+2. ouvrez `index.html` dans un navigateur moderne ;
+3. collez une ou plusieurs clés API Agnès ;
+4. lisez l'avis de confidentialité et confirmez-le ;
+5. choisissez le type de clés : gratuites ou Token Plan ;
+6. suivez les étapes affichées à l'écran.
+
+### Option 2 : serveur local
+
+Servir le dossier en HTTP local évite les restrictions que certains navigateurs
+appliquent aux fichiers ouverts directement. Par exemple, depuis le dossier du
+projet :
+
+```bash
+python3 -m http.server 8080
 ```
-PROJET (le meuble)
-└── Session  (1er tiroir : le film entier, son genre, son ratio, son synopsis)
-    └── Personnages  (sous-tiroirs : fiche + image de référence de chaque personnage)
-    └── Scènes      (sous-tiroirs : décor, ambiance, dialogues, image de la scène)
-        └── Plans   (sous-tiroirs dans la scène : action, caméra, image, vidéo)
+
+Ouvrez ensuite `http://localhost:8080`.
+
+## Parcours de création
+
+1. **Connexion** : saisie des clés Agnès et choix du type d'abonnement.
+2. **Format** : sélection du genre et du ratio d'image.
+3. **Synopsis** : rédaction libre ou amélioration par l'IA.
+4. **Personnages** : fiches, costumes et portraits de référence.
+5. **Scènes** : décors, ambiance, dialogues et images principales.
+6. **Plans** : découpage cinématographique et images de départ.
+7. **Vidéos** : génération, suivi de la file d'attente et lecture du film.
+
+Chaque résultat reste modifiable avant de passer à l'étape suivante.
+
+## Stockage et architecture
+
+CINÉ-GENESIS ne possède ni backend applicatif ni base de données distante propre.
+Les projets sont stockés dans `IndexedDB`, avec un repli sur `localStorage` lorsque
+`IndexedDB` n'est pas disponible.
+
+```text
+Projet
+├── paramètres, genre et synopsis
+├── personnages
+│   └── fiche et image de référence
+└── scènes
+    ├── décor, ambiance, dialogues et image
+    └── plans
+        └── action, caméra, réplique, image et vidéo
 ```
 
-Chaque élément vit à l'intérieur de son parent :
+Cette structure imbriquée permet de réutiliser automatiquement les références
+des personnages et des scènes afin d'améliorer la cohérence visuelle d'un plan à
+l'autre.
 
-- Une **vidéo** appartient à un **plan**.
-- Un **plan** appartient à une **scène**.
-- Une **scène** et les **personnages** appartiennent au **film**.
+## Confidentialité
 
-L'intérêt : quand l'IA génère l'image d'un plan, elle récupère automatiquement,
-en remontant les tiroirs, les images de référence des personnages présents dans
-ce plan et l'image de la scène. C'est ce qui garantit que le même personnage a
-le même visage d'un plan à l'autre. Sauvegarder, modifier ou supprimer un
-élément ne touche jamais le reste du meuble : tout est enregistré et rechargé
-tel quel à la réouverture de la page.
+Le fonctionnement n'est pas entièrement local. Dès qu'une fonction IA est
+utilisée, les données nécessaires sont transmises à Agnès AI, notamment :
 
-## Installation assistée par l'IA
+- idées, synopsis, dialogues et descriptions ;
+- prompts techniques construits par l'application ;
+- images de référence et images servant à la génération vidéo ;
+- photos importées lorsque leur analyse est confirmée.
 
-Ce type d'application n'exige pas de configuration manuelle fastidieuse. Au
-premier lancement, on laisse l'IA construire elle-même la structure du projet :
+Les vidéos peuvent rester disponibles au moyen d'une URL distante fournie par
+Agnès. Consultez les conditions d'utilisation et la politique de confidentialité
+du fournisseur avant d'envoyer des données personnelles, des images de tiers ou
+des œuvres confidentielles.
 
-1. Vous ouvrez le fichier dans un navigateur et entrez vos clés API.
-2. Vous répondez à quelques questions du formulaire (genre, format, thème).
-3. L'IA remplit elle-même toutes les cases : elle rédige le synopsis, crée les
-   personnages avec leur fiche physique, écrit les scènes, découpe les plans.
-4. Tout ce que l'IA a construit est écrit automatiquement dans les tiroirs de
-   la base IndexedDB (objet `sessions` : le film entier avec ses personnages,
-   scènes et plans imbriqués).
-5. Une fois enregistré, le projet est immédiatement utilisable : à chaque
-   réouverture de la page, le dernier projet se recharge tout seul. Vous
-   pouvez modifier n'importe quel champ à la main, l'IA ne le refera pas.
+Les clés API restent en mémoire dans l'onglet par défaut. Leur mémorisation dans
+le navigateur est facultative et peut être annulée avec le bouton **Effacer les
+clés**. Les clés sont séparées des projets et retirées des exports JSON.
 
-Autrement dit : l'installation ne se configure pas, elle se construit. La
-première session d'utilisation est l'installation ; les suivantes n'ont plus
-besoin d'IA pour fonctionner, seulement pour générer des images et des vidéos.
+## Sécurité
 
-## Cinq exemples d'utilisation de l'IA à l'installation de ce type de logiciel
+- n'utilisez ce projet que sur un appareil et un hébergement de confiance ;
+- évitez les postes partagés si vous choisissez de mémoriser une clé ;
+- révoquez immédiatement une clé exposée ou suspecte ;
+- vérifiez les coûts et quotas Agnès avant une génération importante ;
+- conservez une copie des projets exportés si le navigateur doit être réinitialisé.
 
-1. **Onboarding automatique** : l'IA pose des questions en langage naturel
-   (« quel genre de film voulez-vous ? ») et transforme les réponses en
-   configuration technique complète du projet.
-2. **Génération de contenu initial** : au lieu de formulaires vides, l'IA
-   pré-remplit synopsis, personnages, scènes et plans ; l'utilisateur n'a
-   plus qu'à corriger.
-3. **Analyse de documents fournis** : on importe une photo ou un texte, l'IA
-   le décrit et en fait une fiche de personnage ou un décor directement
-   enregistrés dans la base.
-4. **Création des gabarits de requêtes** : l'IA construit elle-même les
-   prompts de génération d'images à partir des données du projet, l'utilisateur
-   n'écrit jamais de prompt technique.
-5. **Diagnostic d'installation** : en cas d'erreur d'API (clé invalide, quota
-   atteint), l'IA explique le problème dans le journal et propose l'action
-   correctrice (désactiver la clé, réessayer, etc.).
-
-## Cinq exemples de reconversion de l'application pour d'autres usages
-
-1. **Studio de musique IA** : remplacer « scènes » par « couplets » et « plans »
-   par « mesures », avec génération de pochettes d'album et de clips.
-2. **Générateur de romans illustrés** : personnage = protagoniste, scène =
-   chapitre, plan = illustration ; la même logique de tiroirs garde la
-   cohérence des personnages d'un chapitre à l'autre.
-3. **Agence de storytelling de marque** : le pipeline produit des publicités
-   ou bande-annonces produit, l'utilisateur décrivant la marque à l'installation.
-4. **Outil pédagogique** : créer des séquences éducatives (leçon → section →
-   illustration animée), l'IA construisant le plan de cours au premier lancement.
-5. **Storyboard de jeu vidéo** : scènes = niveaux, plans = cinématiques,
-   avec cohérence visuelle des personnages du concept à la cinématique.
+L'application applique une politique de sécurité du contenu, refuse les URL de
+médias non chiffrées et bloque les destinations locales ou privées les plus
+courantes. Comme tout client web sans backend, elle ne peut toutefois pas rendre
+une clé totalement secrète pendant son utilisation dans le navigateur.
 
 ## Déploiement
 
-Aucun backend requis : mettez simplement le fichier `index.html` sur
-n'importe quel hébergement statique (GitHub Pages, Hostinger, etc.) et
-ouvrez-le dans un navigateur moderne. Toutes les données restent locales,
-dans le navigateur de l'utilisateur.
+Le dépôt peut être publié sur un hébergement statique de confiance, par exemple
+GitHub Pages. Aucun secret ne doit être inscrit dans `index.html` : chaque
+utilisateur fournit sa propre clé dans son navigateur.
+
+Avant une mise en production, vérifiez que l'API Agnès autorise les requêtes CORS
+depuis le domaine choisi et que les conditions du fournisseur conviennent à votre
+usage.
+
+## Dépannage
+
+### La clé est refusée
+
+Vérifiez qu'il s'agit bien d'une clé Agnès, qu'elle est encore active et que le
+type sélectionné dans l'application correspond à votre offre.
+
+### La génération reste en attente
+
+La file vidéo peut être saturée ou le quota atteint. Gardez l'onglet ouvert,
+consultez le journal technique et utilisez **Tester maintenant** ou **Reprendre la
+production** lorsque l'interface le propose.
+
+### Rien n'est sauvegardé
+
+Autorisez le stockage du site dans le navigateur. Les modes privés, les politiques
+d'entreprise et certains nettoyeurs peuvent supprimer `IndexedDB` et
+`localStorage`.
+
+### Une photo ne peut pas être analysée
+
+Confirmez explicitement son envoi à Agnès et vérifiez qu'elle utilise un format
+d'image pris en charge par le navigateur.
+
+## Structure du dépôt
+
+```text
+.
+├── index.html   Application complète : interface, styles et logique
+└── README.md    Documentation du projet
 ```
+
+## Compatibilité
+
+Un navigateur récent est requis. L'application utilise notamment `IndexedDB`,
+`fetch`, les URL d'objet, la synthèse vocale du navigateur et les éléments vidéo
+HTML5.
+
+## Licence
+
+Aucun fichier de licence n'est actuellement fourni. En l'absence de licence
+explicite, la consultation du code ne vaut pas autorisation de le copier, le
+modifier ou le redistribuer.
