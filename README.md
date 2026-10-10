@@ -1,4 +1,4 @@
-```markdown
+
 # CINÉ-GENESIS — Studio de films IA
 
 ## À quoi sert ce script
